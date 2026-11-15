@@ -1,4 +1,4 @@
-# Offline Android feature coverage — 0.2.0
+# Offline Android feature coverage — Recovery 0.4.6
 
 This is a substantial native Android implementation of the useful offline
 capabilities in Snap Data Explorer and SnapXO. It is not either desktop runtime
@@ -16,8 +16,8 @@ the upstream custom-licensed code. No new runtime libraries were needed.
 | Reply relationships | Explicit reply references preserved and navigable if their target exists. No fabricated reply chain when the export omits it. |
 | Stickers and Bitmoji | Raw JSON retained in Data; local asset paths, nested fields and explicit identifiers indexed into sticker/avatar categories. Native GIF/WebP animation on Android 9+, bounded static fallback. Missing local assets cannot be reconstructed from online URLs offline. |
 | Message browsing | Native lists, older/newer batches, search-result navigation, jump to date, selectable/copyable text. |
-| Full-text search | Local SQLite FTS4, global/in-chat search, dates and sender tokens, visible highlights. Mobile platform uses FTS4 rather than desktop FTS5. In-chat arrows step through all matching records; global result lists remain bounded. |
-| Gallery | One general gallery with type/year filters, sticker/avatar/overlay tags, 120-item pages and bounded thumbnails. No chat-specific galleries or Source switch. |
+| Full-text search | Local SQLite FTS4, global/in-chat search, dates and sender tokens, visible highlights. Mobile platform uses FTS4 rather than desktop FTS5. In-chat results are paged with previous/next navigation; repeat hiding is default in search and enforced in compact mode. Global result lists remain bounded. |
+| Gallery | One general gallery with type/year filters, sticker/avatar/overlay tags, 120-item pages and bounded thumbnails. Chat Shared media shows only locally linked files; unavailable or ambiguous links may leave it empty. No Source switch. |
 | Images and media links | Local ID/path matching, SHA references, pinch/drag/double-tap zoom, native video/audio playback and audio seek. Media across selected parts is relinked after import. |
 | Memories | JSON metadata, local media matching, coordinates/dates, and explicit missing-file states. |
 | Pro / chill modes | Native archive workspace plus immersive media viewer and slideshow; not a pixel-identical React desktop layout. |
@@ -42,23 +42,21 @@ the upstream custom-licensed code. No new runtime libraries were needed.
 | Theme / accessibility | System/light/dark theme, native controls, touch navigation, selectable message text, chart descriptions and screenshots allowed on all screens. Phone UI still needs device QA. |
 | Auto-updater / media downloader | Excluded by your offline-only requirement. No Internet permission, remote media retrieval or online checks. |
 | Docker / LAN hosting | Excluded: desktop/server deployment is not an offline phone capability. Export the portable archive instead. |
-| Desktop installers / hardware flags | Not applicable to an Android APK. Existing local signing key and package ID retained for updates. |
+| Desktop installers / hardware flags | Not applicable to an Android APK. Recovery package and signing identity retained for Recovery updates; separate from the original app. |
 
 ## Boundaries that remain
 
-This build has not been run on a phone/emulator here. The original 0.1 build was
-confirmed working by the user; the new gallery, codec paths, PDFs, document
-providers and migration still need phone validation. The host tests exercise
-synthetic inputs, format math and the production SQL on SQLite; they are not a
-real 6 GB stress run. The private archive was never inspected or uploaded.
+Recovery 0.4.6 was exercised on a disposable Android 11 ARM64 emulator with
+synthetic fixtures: 236 host, 18 compact/search, 69 general UI and 335
+paged-search checks passed. Codec support, document providers and performance
+still vary by phone. This is not a real private 6 GB stress test. No private
+export was opened or uploaded during development verification.
 
-A successful APK build and signature do not establish full feature parity or
-runtime correctness on every Android device. The table deliberately identifies
-adaptations and unsupported desktop/platform-specific behavior.
+Compact view hides matching repeats in chat and search without badges or expand
+controls. Matching can also hide genuine repeated sends; standard view restores
+original chat entries. Raw sender identities and flags are retained.
 
-0.2.2: folder containers containing ZIP parts are processed, including mixed loose
-files. Root-level JSON is recognized. Large JSON/HTML use streaming (4GiB/file;
-bounded individual records/sections), with large metadata previews, insights and
-portable backup/restore streaming. Screenshots are unconditionally allowed by
-this app; the old screenshots allowed on all screens no longer applies.130 host
-checks pass, including >32MiB JSON and HTML tests under a96MiB heap.
+JSON/HTML parsing streams large inputs, with a 4 GiB per-file limit and bounded
+individual records/sections. Large metadata previews and backup/restore also
+stream. Screenshots are allowed by the app. A successful APK build and signature
+do not establish full feature parity or correctness on every Android device.

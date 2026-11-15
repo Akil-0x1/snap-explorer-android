@@ -8,3 +8,9 @@ SearchGroupsSmoke covers complete-query grouping, copies crossing page boundarie
 counts/arrow positions, distinct context, cancellation and reversible display.
 MigrationSmoke exports and reimports synthetic records and checks content hashes.
 Smoke covers normal navigation, pins/groups, paging, previews and search UI.
+
+CompactSearchSmoke checks that compact chat and search hide extra copies without
+repeat badges or expand controls, preserve sender identity and source rows,
+restore standard view, and retain correct highlighting across page boundaries.
+Recovery 0.4.6 verification: 18 compact/search, 69 general UI and 335 paged-search
+checks passed on synthetic data. These are not real-export stress tests.

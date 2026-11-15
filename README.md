@@ -4,6 +4,23 @@ An offline Android viewer for locally imported Snapchat HTML and JSON exports.
 Current Recovery build: **0.4.6-recovery** (version code 16).
 Android 8.0 / API 26 or newer. Package: `local.snapexplorer.recovery`.
 
+## Download and update
+
+Download **Snap-Explorer-Recovery-0.4.6.apk** from the
+[v0.4.6 release](https://github.com/Akil-0x1/snap-explorer-android/releases/tag/v0.4.6).
+The repository and release are private; sign in with an account that has access.
+The release also includes `SHA256SUMS.txt` for file verification.
+
+Install over **Snap Explorer Recovery**. Version 0.4.6 uses the same signing
+identity as earlier Recovery versions, preserving imported data and settings.
+Do not uninstall or reimport to update. The original app with package
+`local.snapexplorer.mobile` is a separate app; this APK does not replace it.
+
+To hide repeated messages, open a chat and choose **menu → Compact view →
+Use compact view**. Repeats disappear from both the chat and its search results,
+without repeat counts or expand buttons. Choose **Use standard view** to see
+all original entries again. Existing enabled compact preferences are preserved.
+
 ## Features
 
 - Import and merge multiple ZIP parts or extracted folders.
@@ -27,8 +44,9 @@ have no extra application-level encryption. A document provider selected by the
 user can separately sync files; choose local storage for offline use.
 
 This repository includes only synthetic test fixtures and attributed public
-synthetic examples. Personal exports, signing keys, APKs, source-backup archives,
-local development logs and downloaded build tools are excluded.
+synthetic examples. Personal exports, signing keys, source-backup archives,
+local development logs and downloaded build tools are excluded. APKs are not
+committed to the source tree; the signed build is attached to the release.
 
 ## Build and test
 
@@ -79,5 +97,5 @@ application from Snap Inc. Preserve the upstream source-available licence in
 The upstream licence has restricted-use provisions; this is not presented as
 unrestricted open-source software.
 
-Older notes in `android-mobile/README.md` and `FEATURE-PARITY.md` are historical;
-this README describes the current package and Recovery build.
+See [Android usage notes](android-mobile/README.md) and
+[feature coverage](android-mobile/FEATURE-PARITY.md) for details and limitations.
