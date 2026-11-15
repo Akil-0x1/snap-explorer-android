@@ -1,0 +1,34 @@
+# Only reviewed project source may enter this repository.
+/*
+!/.gitignore
+!/README.md
+!/LICENSE
+!/THIRD-PARTY-NOTICES.md
+!/restore_toolchain.py
+!/restore_fixtures.py
+!/android-mobile/
+/android-mobile/*
+!/android-mobile/.gitignore
+!/android-mobile/build.py
+!/android-mobile/build_recovery.py
+!/android-mobile/test.py
+!/android-mobile/README.md
+!/android-mobile/FEATURE-PARITY.md
+!/android-mobile/app/
+!/android-mobile/tests/
+!/android-mobile/offline-inspector/
+# Never publish local credentials or generated output.
+**/.keys/
+**/.keys-recovery/
+**/.tools/
+**/.build/
+**/.device-test/
+**/artifacts/
+**/__pycache__/
+**/.DS_Store
+**/*.p12
+**/*.jks
+**/*.keystore
+**/password
+**/.env
+**/.env.*

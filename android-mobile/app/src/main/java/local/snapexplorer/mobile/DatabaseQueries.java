@@ -1,0 +1,12 @@
+package local.snapexplorer.mobile;
+import java.util.*;
+/** Production SQL shared with host SQLite compatibility/migration tests. */
+public final class DatabaseQueries {
+    public static final String VISIBLE="NOT EXISTS(SELECT 1 FROM message_aliases a WHERE a.alias_id=m.id)";
+    public static final String MESSAGES="SELECT m.id,m.chat,c.title,m.sender,m.body,m.date,m.epoch,m.kind,m.media_refs,m.reply_to,m.external_id,m.own FROM messages m JOIN chats c ON c.id=m.chat ";
+    public static final class Query {public final String sql;public final String[] args;Query(String sql,List<String> args){this.sql=sql;this.args=args.toArray(new String[0]);}}
+    public static Query before(String chat,long time,long id,long through){List<String> args=new ArrayList<>();args.add(chat);String where=VISIBLE+" AND m.chat=?";if(through>0){where+=" AND (m.epoch < (SELECT epoch FROM messages WHERE id=?) OR (m.epoch=(SELECT epoch FROM messages WHERE id=?) AND m.id<=?))";for(int i=0;i<3;i++)args.add(Long.toString(through));}if(id>0){where+=" AND (m.epoch<? OR (m.epoch=? AND m.id<?))";args.add(Long.toString(time));args.add(Long.toString(time));args.add(Long.toString(id));}return new Query("SELECT * FROM ("+MESSAGES+"WHERE "+where+" ORDER BY m.epoch DESC,m.id DESC LIMIT 100) ORDER BY epoch,id",args);}
+    public static Query after(String chat,long time,long id){return new Query(MESSAGES+"WHERE "+VISIBLE+" AND m.chat=? AND (m.epoch>? OR (m.epoch=? AND m.id>?)) ORDER BY m.epoch,m.id LIMIT 100",Arrays.asList(chat,Long.toString(time),Long.toString(time),Long.toString(id)));}
+    public static Query search(String query,String chat,Long since,Long until){StringBuilder match=new StringBuilder();java.util.regex.Matcher words=java.util.regex.Pattern.compile("[\\p{L}\\p{N}_]+").matcher(query);while(words.find()){if(match.length()>0)match.append(" AND ");match.append('"').append(words.group()).append("\"*");}if(match.length()==0)return new Query(MESSAGES+"WHERE 0",Collections.emptyList());List<String> args=new ArrayList<>();args.add(match.toString());String sql=MESSAGES+"JOIN message_search f ON f.docid=m.id WHERE "+VISIBLE+" AND message_search MATCH ?";if(chat!=null){sql+=" AND m.chat=?";args.add(chat);}if(since!=null){sql+=" AND m.epoch>=?";args.add(Long.toString(since));}if(until!=null){sql+=" AND m.epoch<=?";args.add(Long.toString(until));}return new Query(sql+" ORDER BY m.epoch DESC,m.id DESC LIMIT 200",args);}
+    private DatabaseQueries(){}
+}

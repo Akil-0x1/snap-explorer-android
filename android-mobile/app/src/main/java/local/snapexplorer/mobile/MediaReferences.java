@@ -1,0 +1,25 @@
+package local.snapexplorer.mobile;
+import org.json.*;
+import java.net.URI;
+import java.util.*;
+import java.util.regex.*;
+
+/** Extracts explicit media references, never downloads or treats reply media as attachments. */
+public final class MediaReferences {
+ private static final Set<String> FIELDS=new HashSet<>(Arrays.asList("mediaid","mediaids","mediapath","mediareferences","mediareference","mediafilename","mediaurl","medialink","stickerid","stickerids","stickerpath","stickerfilename","stickerurl","stickerlink","stickermediaurl","customstickerid","customstickerids","customstickerpath","customstickermediaid","customstickermediaids","customstickerfilename","customstickerurl","customstickerlink","bitmojiid","bitmojipath","bitmojiurl","downloadlink","downloadurl"));
+ private static final Set<String> CONTAINERS=new HashSet<>(Arrays.asList("media","attachments","attachment","sticker","stickers","customsticker","customstickers","bitmoji","asset","assets"));
+ private static final Set<String> QUOTED=new HashSet<>(Arrays.asList("reply","replyto","quotedmessage","parentmessage","repliedto","replies","reactions","sender","from","recipient","participants","owner","creator","user","account","profile"));
+ private static final Pattern IDS=Pattern.compile("(?i)[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[0-9a-f]{32,64}");
+ public static String name(String raw){return raw.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]","");}
+ public static List<String> expand(String raw){LinkedHashSet<String> refs=new LinkedHashSet<>();add(raw,false,refs,0);return new ArrayList<>(refs);}
+ public static List<String> collect(JSONObject record){return collect(record,false);}
+ public static List<String> collect(JSONObject record,boolean asset){LinkedHashSet<String> refs=new LinkedHashSet<>();walk(record,asset,refs,0);return new ArrayList<>(refs);}
+ private static void walk(Object object,boolean asset,Set<String> out,int depth){if(depth>32)return;if(object instanceof JSONObject){JSONObject row=(JSONObject)object;Iterator<String> keys=row.keys();while(keys.hasNext()){String original=keys.next(),key=name(original);if(QUOTED.contains(key))continue;Object value=row.opt(original);boolean context=CONTAINERS.contains(key);if(asset&&key.equals("content")&&value instanceof String&&assetFile((String)value))add(value,true,out,depth+1);else if(FIELDS.contains(key)||asset&&Arrays.asList("id","ids","path","file","filename","filepath","url","uri","src","href").contains(key))add(value,asset||context,out,depth+1);else if(value instanceof JSONObject||value instanceof JSONArray)walk(value,context,out,depth+1);}}else if(object instanceof JSONArray){JSONArray list=(JSONArray)object;for(int i=0;i<list.length();i++)walk(list.opt(i),asset,out,depth+1);}}
+ private static boolean assetFile(String text){return text.trim().matches("(?i)[^\\s?#]+\\.(?:png|jpe?g|gif|webp|heif|heic|svg|tgs|lottie|mp4|webm|nomedia)");}
+ private static void add(Object value,boolean asset,Set<String> out,int depth){if(value instanceof String||value instanceof Number){String text=value.toString().trim();if(text.matches("[A-Za-z0-9_~.-]+(?:\\|[A-Za-z0-9_~.-]+)+")){for(String part:text.split("\\|"))add(part,asset,out,depth+1);return;}if(text.startsWith("[")){try{add(new JSONArray(text),asset,out,depth+1);return;}catch(JSONException ignored){return;}}if(text.matches("(?i)[0-9a-f-]{8,}(?:\\s*,\\s*[0-9a-f-]{8,})+")){for(String part:text.split(","))add(part,asset,out,depth+1);return;}out.addAll(localKeys(text));}else if(value instanceof JSONArray){JSONArray array=(JSONArray)value;for(int i=0;i<array.length();i++)add(array.opt(i),asset,out,depth+1);}else if(value instanceof JSONObject)walk(value,true,out,depth+1);}
+ public static List<String> localKeys(String raw){LinkedHashSet<String> keys=new LinkedHashSet<>();String value=raw==null?"":raw.trim();if(value.isEmpty()||value.equalsIgnoreCase("null")||value.equalsIgnoreCase("none")||value.indexOf('\0')>=0||value.indexOf('\\')>=0)return new ArrayList<>();
+  if(value.startsWith("http://")||value.startsWith("https://")){try{URI uri=new URI(value.replace(" ","%20"));Matcher ids=IDS.matcher(uri.getPath()==null?"":uri.getPath());while(ids.find())keys.add(ids.group());if(!keys.isEmpty())return new ArrayList<>(keys);String query=uri.getRawQuery();if(query!=null)for(String parameter:query.split("&")){String[] pair=parameter.split("=",2);if(pair.length==2&&Arrays.asList("id","mediaid","stickerid").contains(name(pair[0]))){String id=java.net.URLDecoder.decode(pair[1],"UTF-8");if(id.matches("[A-Za-z0-9_-]{8,128}"))keys.add(id);}}}catch(Exception ignored){}return new ArrayList<>(keys);}
+  if(value.contains(":")||value.startsWith("/"))return new ArrayList<>();try{value=new URI(value.replace(" ","%20")).getPath();}catch(Exception ignored){}if(value!=null&&ArchiveImporter.safeName(value)){while(value.startsWith("./"))value=value.substring(2);keys.add(value);Matcher ids=IDS.matcher(value);while(ids.find())keys.add(ids.group());}return new ArrayList<>(keys);
+ }
+ private MediaReferences(){}
+}

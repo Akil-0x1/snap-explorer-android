@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="local.snapexplorer.recovery.smoke">
+  <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35" />
+  <application android:label="Synthetic Snap UI tests" />
+  <instrumentation android:name="local.snapexplorer.mobile.Smoke" android:targetPackage="local.snapexplorer.recovery" />
+  <instrumentation android:name="local.snapexplorer.mobile.LargeChatSmoke" android:targetPackage="local.snapexplorer.recovery" />
+  <instrumentation android:name="local.snapexplorer.mobile.CatalogSmoke" android:targetPackage="local.snapexplorer.recovery" />
+  <instrumentation android:name="local.snapexplorer.mobile.PublicFixtureSmoke" android:targetPackage="local.snapexplorer.recovery" />
+  <instrumentation android:name="local.snapexplorer.mobile.StickerSmoke" android:targetPackage="local.snapexplorer.recovery" />
+  <instrumentation android:name="local.snapexplorer.mobile.SearchGroupsSmoke" android:targetPackage="local.snapexplorer.recovery" />
+  <instrumentation android:name="local.snapexplorer.mobile.MigrationSmoke" android:targetPackage="local.snapexplorer.recovery" />
+  <instrumentation android:name="local.snapexplorer.mobile.SenderDirectionSmoke" android:targetPackage="local.snapexplorer.recovery" />
+  <instrumentation android:name="local.snapexplorer.mobile.CompactSearchSmoke" android:targetPackage="local.snapexplorer.recovery" />
+</manifest>

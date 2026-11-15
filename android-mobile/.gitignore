@@ -1,0 +1,7 @@
+.tools/
+.build/
+.device-test/
+.keys/
+artifacts/
+__pycache__/
+.keys-recovery/

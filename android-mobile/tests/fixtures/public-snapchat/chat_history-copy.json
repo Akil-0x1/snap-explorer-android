@@ -1,0 +1,39 @@
+{
+  "pal": [
+    {
+      "From": "me_user",
+      "Media Type": "TEXT",
+      "Created": "2024-01-02 10:01:00 UTC",
+      "Content": "hey",
+      "Conversation Title": null,
+      "IsSender": true,
+      "Created(microseconds)": 1704189660000000,
+      "IsSaved": false,
+      "Media IDs": ""
+    },
+    {
+      "From": "pal",
+      "Media Type": "MEDIA",
+      "Created": "2024-01-01 09:00:00 UTC",
+      "Content": null,
+      "Conversation Title": null,
+      "IsSender": false,
+      "Created(microseconds)": 1704099600000000,
+      "IsSaved": false,
+      "Media IDs": "b~abc|b~def"
+    }
+  ],
+  "other": [
+    {
+      "From": "other",
+      "Media Type": "STICKER",
+      "Created": "2024-02-02 00:00:00 UTC",
+      "Content": null,
+      "Conversation Title": null,
+      "IsSender": false,
+      "Created(microseconds)": 1706832000000000,
+      "IsSaved": false,
+      "Media IDs": ""
+    }
+  ]
+}
