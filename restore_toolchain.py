@@ -37,5 +37,5 @@ def jar(spec):
  print('Verified library:',filename,flush=True)
 with ThreadPoolExecutor(max_workers=3) as pool:
  futures=[pool.submit(sdk,x) for x in [('platform-35_r02.zip','0bb560a90a7a2cbd0dd8348224d518b638fe7949','platform'),('build-tools_r35_macosx.zip','93ab8ce91230e067b5add4bfa79919c52b27f072','build-tools')]]
- futures += [pool.submit(jar,x) for x in [('org.jsoup','jsoup','1.24.1'),('org.apache.commons','commons-compress','1.28.0'),('commons-io','commons-io','2.20.0'),('commons-codec','commons-codec','1.19.0'),('org.apache.commons','commons-lang3','3.18.0'),('com.google.code.gson','gson','2.13.2'),('org.json','json','20250517')]]
+ futures += [pool.submit(jar,x) for x in [('org.jsoup','jsoup','1.24.1'),('org.apache.commons','commons-compress','1.28.0'),('commons-io','commons-io','2.20.0'),('commons-codec','commons-codec','1.19.0'),('org.apache.commons','commons-lang3','3.18.0'),('com.google.code.gson','gson','2.13.2'),('org.json','json','20260719')]]
  for f in futures:f.result()

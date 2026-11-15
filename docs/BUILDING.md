@@ -15,7 +15,7 @@ Gradle, or NDK installation is required by these scripts.
 
 ## Obtain the source and tools
 
-Clone the repository using your authenticated GitHub account while it is private:
+Clone the repository:
 
 ```sh
 git clone https://github.com/Akil-0x1/snap-explorer-android.git
@@ -107,8 +107,10 @@ were captured on an Android 11 ARM64 emulator using the signed release APK.
 Device behaviour and codec support still need validation on the intended phone.
 
 There is no continuous-integration or automated dependency scanning configured.
-The optional Mac inspector and host tests use `org.json:json:20250517`, which has
-[a known resource-exhaustion advisory](https://github.com/advisories/GHSA-ghc9-756g-vrcv).
-That JAR is not bundled into the Android APK. Avoid feeding untrusted files to
-those Mac-side tools until the dependency is updated; changing it is separate
-from this documentation and demo work.
+The optional Mac inspector and host tests use `org.json:json:20260719`, which is
+listed as patched for the [numeric resource-exhaustion advisory](https://github.com/advisories/GHSA-ghc9-756g-vrcv).
+That JAR is not bundled into the Android APK. Re-run toolchain setup and rebuild
+the inspector to use it locally. Rebuilding retires older generated JSON JARs
+from the inspector's wildcard classpath; merely changing the source checkout
+does not update an existing inspector binary. Older source tags and archived
+tool copies may still reference the previous dependency.

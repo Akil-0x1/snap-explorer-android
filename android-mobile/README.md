@@ -6,7 +6,6 @@ The app uses package `local.snapexplorer.recovery`.
 ## Install
 
 Download the signed APK from [Releases](https://github.com/Akil-0x1/snap-explorer-android/releases/latest).
-Sign in to an account with access to this private repository.
 Install over **Snap Explorer Recovery** to retain existing imports and settings.
 No uninstall or repeat import is needed. It does not replace the separate
 original `local.snapexplorer.mobile` app, whose signing identity differs.

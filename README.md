@@ -51,7 +51,6 @@ Actual Android screens with fictional sample chats. No personal export was used.
 Requires **Android 8.0 or newer**.
 
 Download the signed APK from [Releases](https://github.com/Akil-0x1/snap-explorer-android/releases/latest).
-This repository is private; you must sign in with an account that has access.
 A `SHA256SUMS.txt` file is included for download verification.
 
 The app installs as **Snap Explorer Recovery**, package `local.snapexplorer.recovery`.
