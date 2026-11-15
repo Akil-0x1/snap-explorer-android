@@ -10,4 +10,5 @@
   <instrumentation android:name="local.snapexplorer.mobile.MigrationSmoke" android:targetPackage="local.snapexplorer.recovery" />
   <instrumentation android:name="local.snapexplorer.mobile.SenderDirectionSmoke" android:targetPackage="local.snapexplorer.recovery" />
   <instrumentation android:name="local.snapexplorer.mobile.CompactSearchSmoke" android:targetPackage="local.snapexplorer.recovery" />
+  <instrumentation android:name="local.snapexplorer.mobile.DemoScreens" android:targetPackage="local.snapexplorer.recovery" />
 </manifest>

@@ -6,6 +6,7 @@
 !/THIRD-PARTY-NOTICES.md
 !/restore_toolchain.py
 !/restore_fixtures.py
+!/docs/
 !/android-mobile/
 /android-mobile/*
 !/android-mobile/.gitignore
@@ -32,3 +33,8 @@
 **/password
 **/.env
 **/.env.*
+
+# Generated inspector tools and copied sources are local only.
+/android-mobile/offline-inspector/lib/
+/android-mobile/offline-inspector/.classes/
+/android-mobile/offline-inspector/src/JsonRecords.java

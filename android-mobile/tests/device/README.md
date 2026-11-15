@@ -14,3 +14,7 @@ repeat badges or expand controls, preserve sender identity and source rows,
 restore standard view, and retain correct highlighting across page boundaries.
 Recovery 0.4.6 verification: 18 compact/search, 69 general UI and 335 paged-search
 checks passed on synthetic data. These are not real-export stress tests.
+
+DemoScreens captures fictional sample chats on a disposable emulator for the
+repository screenshots. It requires `-e demo synthetic-only` and refuses a
+non-emulator environment. See `docs/BUILDING.md` at the repository root.

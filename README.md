@@ -18,6 +18,14 @@ Search works on your imported export, not your live Snapchat account. Messages
 that Snapchat did not include in the export cannot be searched or recovered.
 No login or Internet connection is needed to search an imported archive.
 
+## App preview
+
+Actual Android screens with fictional sample chats. No personal export was used.
+
+| Conversations | Search across chats | Find inside a conversation |
+| --- | --- | --- |
+| <img src="docs/screenshots/chats.png" alt="Conversation list with fictional Project plans, Alex and Weekend plans chats" width="240"> | <img src="docs/screenshots/archive-search.png" alt="Search results for coffee across fictional conversations" width="240"> | <img src="docs/screenshots/chat-search.png" alt="Highlighted coffee message with previous and next match controls" width="240"> |
+
 ## Features
 
 - **Chat reader:** conversation bubbles, sender names, timestamps, reply references
@@ -115,6 +123,10 @@ key cannot replace an existing installation signed with the established key.
 
 Device tests use synthetic data and replace the test app's data. Run them only
 on a disposable emulator, never on a phone containing personal imports.
+
+See the [build guide](docs/BUILDING.md) for prerequisites, output paths, signing
+requirements, and checks you can reproduce. The [engineering notes](docs/ENGINEERING.md)
+explain the Android implementation, upstream foundations, and design tradeoffs.
 
 ## Project structure
 
