@@ -1,13 +1,27 @@
 # Snap Explorer for Android
 
-An offline Android app for exploring your Snapchat HTML and JSON exports.
-Browse chats, view local media, search your archive, and keep your data on your phone.
+**Find messages in your Snapchat chat history—offline.**
+
+Import your Snapchat HTML or JSON export, search across conversations, and jump
+to the messages you want to revisit. Your archive stays on your phone.
+
+## Search your Snapchat messages
+
+- **Search across imported chats** with words or a sender name.
+- **Narrow results by date** to find messages from a particular period.
+- **Open a matching message in its conversation** for surrounding context.
+- **Search inside a chat** with a result list, highlighted words, and previous/next
+  arrows to move between matches.
+- **Hide matching repeats** with compact view for cleaner chat and search results.
+
+Search works on your imported export, not your live Snapchat account. Messages
+that Snapchat did not include in the export cannot be searched or recovered.
+No login or Internet connection is needed to search an imported archive.
 
 ## Features
 
 - **Chat reader:** conversation bubbles, sender names, timestamps, reply references
   when supplied, selectable text, starred messages, and jump to date.
-- **Search:** message result lists, highlighted matches, and previous/next arrows.
 - **Compact view:** hide matching repeated messages in chats and search while
   preserving original records.
 - **Chat organisation:** pin conversations and arrange them into groups.
