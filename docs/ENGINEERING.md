@@ -4,6 +4,10 @@ Snap Explorer is a native Android adaptation for reading Snapchat exports
 locally. The goal is to make an existing archive searchable and usable on a
 phone while retaining its original records.
 
+## Development approach
+
+Developed with substantial AI assistance for implementation, debugging, testing, and documentation. I defined the requirements, tested the app, and directed revisions.
+
 ## Project-specific Android work
 
 The implementation in this repository includes:
