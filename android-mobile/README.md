@@ -1,12 +1,11 @@
-# Snap Explorer Recovery for Android — 0.4.6
+# Snap Explorer Recovery for Android
 
 Offline Snapchat HTML/JSON archive viewer. Android 8.0 / API 26 or newer.
-The distributable Recovery app uses package `local.snapexplorer.recovery`,
-version name `0.4.6-recovery`, version code 16.
+The app uses package `local.snapexplorer.recovery`.
 
-## Download and update
+## Install
 
-Use the signed APK in the [v0.4.6 release](https://github.com/Akil-0x1/snap-explorer-android/releases/tag/v0.4.6).
+Download the signed APK from [Releases](https://github.com/Akil-0x1/snap-explorer-android/releases/latest).
 Sign in to an account with access to this private repository.
 Install over **Snap Explorer Recovery** to retain existing imports and settings.
 No uninstall or repeat import is needed. It does not replace the separate
@@ -43,8 +42,7 @@ view also offers a **Hide repeats** search toggle.
 
 **Chat menu → Compact view → Use compact view** hides matching repeated
 messages in both the chat and search. Each remaining message is a normal bubble,
-with no group badge, copy count or expand button. Compact mode also overrides
-an older search preference that showed every entry. **Use standard view**
+with no group badge, copy count or expand button. Repeat hiding also applies to search while compact mode is enabled. **Use standard view**
 restores all original chat entries.
 
 Matching uses sender, text, displayed minute, attachments and reply context.
@@ -70,8 +68,7 @@ the built Android app remains offline. `build.py` creates an unsigned verificati
 artifact. `build_recovery.py` signs with the established private Recovery key;
 that key is deliberately absent from GitHub and is never generated silently.
 
-The 0.4.6 checks passed on synthetic fixtures: 236 host checks, 18 compact/search
-Android checks, 69 general Android UI checks and 335 paged-search checks.
+Tests use synthetic fixtures rather than private chat exports.
 Device tests replace synthetic app data and must run only on a disposable
 emulator. They do not guarantee codec support or behaviour on every phone.
 

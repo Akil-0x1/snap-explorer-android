@@ -1,58 +1,87 @@
 # Snap Explorer for Android
 
-An offline Android viewer for locally imported Snapchat HTML and JSON exports.
-Current Recovery build: **0.4.6-recovery** (version code 16).
-Android 8.0 / API 26 or newer. Package: `local.snapexplorer.recovery`.
-
-## Download and update
-
-Download **Snap-Explorer-Recovery-0.4.6.apk** from the
-[v0.4.6 release](https://github.com/Akil-0x1/snap-explorer-android/releases/tag/v0.4.6).
-The repository and release are private; sign in with an account that has access.
-The release also includes `SHA256SUMS.txt` for file verification.
-
-Install over **Snap Explorer Recovery**. Version 0.4.6 uses the same signing
-identity as earlier Recovery versions, preserving imported data and settings.
-Do not uninstall or reimport to update. The original app with package
-`local.snapexplorer.mobile` is a separate app; this APK does not replace it.
-
-To hide repeated messages, open a chat and choose **menu → Compact view →
-Use compact view**. Repeats disappear from both the chat and its search results,
-without repeat counts or expand buttons. Choose **Use standard view** to see
-all original entries again. Existing enabled compact preferences are preserved.
+An offline Android app for exploring your Snapchat HTML and JSON exports.
+Browse chats, view local media, search your archive, and keep your data on your phone.
 
 ## Features
 
-- Import and merge multiple ZIP parts or extracted folders.
-- Browse conversations, local photos, videos, audio, stickers and export metadata.
-- Search with result lists and previous/next match navigation.
-- Optional compact view hides matching repeated messages in chats and search,
-  without group badges or expand controls. Standard view restores original entries.
-- Pin and group conversations, export and restore local portable backups.
-- Preserve raw sender names; select your sender explicitly to control alignment.
+- **Chat reader:** conversation bubbles, sender names, timestamps, reply references
+  when supplied, selectable text, starred messages, and jump to date.
+- **Search:** message result lists, highlighted matches, and previous/next arrows.
+- **Compact view:** hide matching repeated messages in chats and search while
+  preserving original records.
+- **Chat organisation:** pin conversations and arrange them into groups.
+- **Media viewer:** local photos, videos, audio, stickers, Bitmoji assets, and
+  Memories when included in the export. Browse by media type and year.
+- **Shared media:** view files linked to a conversation when the export provides
+  usable references.
+- **Archive imports:** merge multiple ZIP parts or extracted folders containing
+  HTML, JSON, and media. Large files are streamed during import.
+- **Metadata and insights:** browse supplied account and activity datasets,
+  conversation statistics, and offline location information.
+- **Local exports and backups:** save conversations, media, reports, and portable
+  archive backups that can be restored in the app.
+- **Display options:** light/dark themes and timezone selection. Screenshots and
+  screen recordings are allowed.
 
-Compact matching uses sender, text, displayed minute, attachments and reply
-context. Genuine repeated sends may also be hidden. Original records are retained.
-Media is available only when the export includes usable local files or references.
+## Install
+
+Requires **Android 8.0 or newer**.
+
+Download the signed APK from [Releases](https://github.com/Akil-0x1/snap-explorer-android/releases/latest).
+This repository is private; you must sign in with an account that has access.
+A `SHA256SUMS.txt` file is included for download verification.
+
+The app installs as **Snap Explorer Recovery**, package `local.snapexplorer.recovery`.
+To keep existing imports and settings, install over the same app signed with the
+same key. Do not uninstall it to resolve a signature mismatch. The original
+`local.snapexplorer.mobile` app is a separate installation.
+
+## Import your archive
+
+1. Keep a backup of your original Snapchat export.
+2. Copy the ZIP parts or extracted export folder to local phone storage.
+3. Choose **Import / merge** and select related parts together, or choose the
+   extracted folder.
+4. Keep the app foregrounded until import finishes.
+
+Allow extra free space for retained sources, extracted media, and backups.
+Interrupted source copies can be retried; the existing archive is retained until
+an import commits. See [Android usage notes](android-mobile/README.md) for details.
 
 ## Privacy
 
-The app requests no Android permissions, including no Internet permission.
-There is no upload service, telemetry, or account login. Imported data stays in
-private app storage. Screenshots are allowed. App storage and exported backups
-have no extra application-level encryption. A document provider selected by the
-user can separately sync files; choose local storage for offline use.
+The app requests **no Android permissions**, including no Internet permission.
+There is no upload service, telemetry, or account login. Imported chats, metadata,
+and media remain in private app storage. Automatic Android cloud backup and
+device transfer are excluded.
 
-This repository includes only synthetic test fixtures and attributed public
-synthetic examples. Personal exports, signing keys, source-backup archives,
-local development logs and downloaded build tools are excluded. APKs are not
-committed to the source tree; the signed build is attached to the release.
+App storage and exported backups have no extra application-level encryption.
+Choose an on-device destination for exports: a cloud document provider can sync
+files using its own permissions.
+
+The repository contains source and synthetic test fixtures. Personal exports,
+signing keys, passwords, local backups, and development caches are excluded.
+
+## Limitations
+
+- Only information included in your export can be displayed. Missing or deleted
+  messages, media, stickers, and reply relationships cannot be reconstructed.
+- Online media links alone are insufficient; the app does not download files.
+  Shared media can be empty when conversation links are missing or ambiguous.
+- Compact matching uses sender, text, displayed minute, attachments, and reply
+  context. It can hide genuine repeated sends too. **Use standard view** restores
+  original chat entries; no records are deleted.
+- Large imports depend on available storage and memory. Media playback and
+  conversion depend on the phone's supported codecs.
 
 ## Build and test
 
-The build scripts currently target an Apple Silicon Mac and use Python 3,
-a JDK supporting `javac --release 8`, Android 35 platform/build tools, and pinned
-Java libraries. Set `SNAP_JAVA_HOME` if the JDK is not at the default Homebrew path.
+The build scripts target an Apple Silicon Mac with Python 3, a JDK supporting
+`javac --release 8`, Android 35 platform/build tools, and pinned Java libraries.
+Set `SNAP_JAVA_HOME` if your JDK is not at the default Homebrew location.
+
+From the repository root:
 
 ```sh
 python3 restore_toolchain.py
@@ -61,41 +90,34 @@ python3 android-mobile/test.py
 python3 android-mobile/build.py
 ```
 
-Toolchain setup downloads SDK tools and Java dependencies. The Android app
-itself remains offline. `build.py` produces an **unsigned verification APK**,
-which is not a distributable update.
+Toolchain setup downloads development dependencies; the Android app remains
+offline. `build.py` produces an **unsigned verification APK**.
 
-For a signed Recovery update, `python3 android-mobile/build_recovery.py` requires
-the established private key and password under `android-mobile/.keys-recovery/`.
-Those secrets are intentionally absent. The script refuses to generate a new
-identity. Contributors building an independent app need their own signing
-identity; it cannot update an existing Recovery installation signed by another key.
-Never uninstall an existing app to resolve a signature mismatch without first
-making and verifying an appropriate local backup.
+`python3 android-mobile/build_recovery.py` produces the signed Recovery APK only
+when the established private signing files are available under
+`android-mobile/.keys-recovery/`. Those files are not in this repository, and the
+script refuses to generate a replacement identity. A build signed with another
+key cannot replace an existing installation signed with the established key.
 
-Device instrumentation tests are in `android-mobile/tests/device/` and use
-synthetic fixtures. Run only on a disposable emulator: several tests replace
-its test app data. Do not run them against a phone containing private imports.
+Device tests use synthetic data and replace the test app's data. Run them only
+on a disposable emulator, never on a phone containing personal imports.
 
-Current verification: 236 host checks, 18 compact/search Android checks,
-69 general UI checks and 335 paged-search checks passed on synthetic fixtures.
-No CI workflow is configured in this initial repository.
+## Project structure
 
-## Project layout
-
-- `android-mobile/app/`: Android source, resources and synthetic sample.
-- `android-mobile/tests/`: host and device tests, synthetic fixtures.
+- `android-mobile/app/`: Android source, resources, and synthetic sample.
+- `android-mobile/tests/`: host and device tests, with synthetic fixtures.
 - `android-mobile/offline-inspector/`: optional local export inspection utility.
 - `restore_toolchain.py`, `restore_fixtures.py`: development setup helpers.
 
+See [feature coverage](android-mobile/FEATURE-PARITY.md) for supported formats
+and platform-specific limits.
+
 ## Licensing and attribution
 
-This is an unofficial Android adaptation associated with work on
-[Snap Data Explorer](https://github.com/KodyDennon/SnapDataExplorer), not an
-application from Snap Inc. Preserve the upstream source-available licence in
-[LICENSE](LICENSE) and the notices in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
-The upstream licence has restricted-use provisions; this is not presented as
-unrestricted open-source software.
+An unofficial Android adaptation associated with work on
+[Snap Data Explorer](https://github.com/KodyDennon/SnapDataExplorer).
+Not affiliated with Snap Inc.
 
-See [Android usage notes](android-mobile/README.md) and
-[feature coverage](android-mobile/FEATURE-PARITY.md) for details and limitations.
+Preserve the upstream source-available [licence](LICENSE) and
+[third-party notices](THIRD-PARTY-NOTICES.md). The licence includes restricted-use
+provisions and is not an unrestricted open-source licence.
